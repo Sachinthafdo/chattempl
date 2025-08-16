@@ -1,6 +1,7 @@
 import { ChatProvider,useChatContext  } from "@/components/chat-provider"
 import { ChatInterface } from "@/components/chat-interface"
 import { AdminPanel } from "@/components/admin-panel"
+import { generateBackgroundStyle  } from "@/components/background-customizer"
 
 export default function Home() {
     const { chatState } = useChatContext()
