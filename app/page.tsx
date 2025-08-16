@@ -1,6 +1,6 @@
 "use client"
 
-import { ChatProvider,useChatContext  } from "@/components/chat-provider"
+import { useChatContext  } from "@/components/chat-provider"
 import { ChatInterface } from "@/components/chat-interface"
 import { AdminPanel } from "@/components/admin-panel"
 import { generateBackgroundStyle  } from "@/components/background-customizer"
@@ -11,7 +11,6 @@ export default function Home() {
  
 
   return (
-    <ChatProvider>
       <div
         className="min-h-screen"
           style={generateBackgroundStyle(chatState.background)} // <-- dynamic background
@@ -33,6 +32,5 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </ChatProvider>
   )
 }
