@@ -1,3 +1,5 @@
+"use client"
+
 import { ChatProvider,useChatContext  } from "@/components/chat-provider"
 import { ChatInterface } from "@/components/chat-interface"
 import { AdminPanel } from "@/components/admin-panel"
