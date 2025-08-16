@@ -7,6 +7,33 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Palette, Plus, Trash2 } from "lucide-react"
 import type { BackgroundSettings } from "@/types/chat"
 
+
+export const hexToRgba = (hex: string, opacity: number) => {
+  const r = Number.parseInt(hex.slice(1, 3), 16)
+  const g = Number.parseInt(hex.slice(3, 5), 16)
+  const b = Number.parseInt(hex.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`
+}
+
+export const generateBackgroundStyle = (bg: BackgroundSettings) => {
+  if (bg.type === "solid") {
+    return { background: hexToRgba(bg.solidColor, bg.solidOpacity) }
+  } else {
+    const colors = bg.gradientColors
+      .sort((a, b) => a.position - b.position)
+      .map((c) => `${hexToRgba(c.color, c.opacity)} ${c.position}%`)
+      .join(", ")
+
+    if (bg.gradientType === "linear") {
+      return { background: `linear-gradient(${bg.gradientDirection}, ${colors})` }
+    } else if (bg.gradientType === "radial") {
+      return { background: `radial-gradient(circle, ${colors})` }
+    } else {
+      return { background: `conic-gradient(${colors})` }
+    }
+  }
+}
+
 export function BackgroundCustomizer() {
   const { chatState, setBackgroundSettings } = useChatContext()
   const [isOpen, setIsOpen] = useState(false)
@@ -23,32 +50,7 @@ export function BackgroundCustomizer() {
     { value: "to-tl", label: "To Top Left" },
   ]
 
-  const generateBackgroundStyle = (bg: BackgroundSettings) => {
-    if (bg.type === "solid") {
-      const rgba = hexToRgba(bg.solidColor, bg.solidOpacity)
-      return { backgroundColor: rgba }
-    } else {
-      const colors = bg.gradientColors
-        .sort((a, b) => a.position - b.position)
-        .map((c) => `${hexToRgba(c.color, c.opacity)} ${c.position}%`)
-        .join(", ")
-
-      if (bg.gradientType === "linear") {
-        return { background: `linear-gradient(${bg.gradientDirection}, ${colors})` }
-      } else if (bg.gradientType === "radial") {
-        return { background: `radial-gradient(circle, ${colors})` }
-      } else {
-        return { background: `conic-gradient(${colors})` }
-      }
-    }
-  }
-
-  const hexToRgba = (hex: string, opacity: number) => {
-    const r = Number.parseInt(hex.slice(1, 3), 16)
-    const g = Number.parseInt(hex.slice(3, 5), 16)
-    const b = Number.parseInt(hex.slice(5, 7), 16)
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`
-  }
+ 
 
   const addGradientColor = () => {
     setSettings((prev) => ({
