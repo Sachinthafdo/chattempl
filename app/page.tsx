@@ -1,15 +1,18 @@
-import { ChatProvider } from "@/components/chat-provider"
+import { ChatProvider,useChatContext  } from "@/components/chat-provider"
 import { ChatInterface } from "@/components/chat-interface"
 import { AdminPanel } from "@/components/admin-panel"
 
 export default function Home() {
+    const { chatState } = useChatContext()
+
+ 
+
   return (
     <ChatProvider>
       <div
         className="min-h-screen"
-        style={{
-          background: "linear-gradient(to bottom right, #16a34a, #22c55e, #15803d)",
-        }}
+          style={generateBackgroundStyle(chatState.background)} // <-- dynamic background
+    
       >
         <div className="container mx-auto p-4">
           <div className="grid lg:grid-cols-2 gap-6 h-screen max-h-screen">
